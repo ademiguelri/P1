@@ -5,38 +5,39 @@ import time
 import config
 import thermostat
 
-server = Server()
+def start_server():
+    server = Server()
 
-server.set_endpoint(config.URL)
+    server.set_endpoint(config.URL)
 
-name = "OPCUA_SIMULATION_SERVER"
-#addspace = server.register_namespace(name)
-id = 'ns=2;s="V1"'
+    name = "OPCUA_SIMULATION_SERVER"
+    #addspace = server.register_namespace(name)
+    id = 'ns=2;s="V1"'
 
-node =  server.get_objects_node()
+    node =  server.get_objects_node()
 
-Param = node.add_object(id, "Parameters")
+    Param = node.add_object(id, "Parameters")
 
-Temp = Param.add_variable('ns=2;s="V1_Te"', "Temperature", 0)
-Time = Param.add_variable('ns=2;s="V1_Ti"', "Time", 0)
-State = Param.add_variable('ns=2;s="V1_St"', "State", 0)
+    Temp = Param.add_variable('ns=2;s="V1_Te"', "Temperature", 0)
+    Time = Param.add_variable('ns=2;s="V1_Ti"', "Time", 0)
+    State = Param.add_variable('ns=2;s="V1_St"', "State", 0)
 
-Temp.set_writable()
-Time.set_writable()
-State.set_writable()
+    Temp.set_writable()
+    Time.set_writable()
+    State.set_writable()
 
-server.start()
-print("Server started at {}".format(config.URL))
+    server.start()
+    print("Server started at {}".format(config.URL))
 
-while True:
-    Temperature = thermostat.thermostat.temp
-    TIME = datetime.datetime.now()
-    STATE = thermostat.thermostat.state
+    while True:
+        Temperature = config.local_temp
+        TIME = datetime.datetime.now()
+        STATE = config.local_state
 
-    print(Temperature, TIME)
+        print("Server: " + str(Temperature), str(TIME), str(STATE))
 
-    Temp.set_value(Temperature)
-    Time.set_value(TIME)
-    State.set_value(STATE)
+        Temp.set_value(Temperature)
+        Time.set_value(TIME)
+        State.set_value(STATE)
 
-    time.sleep(2)
+        time.sleep(2)

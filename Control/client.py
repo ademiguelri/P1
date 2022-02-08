@@ -3,23 +3,29 @@ import time
 import config
 import thermostat
 
-client = Client(config.URL1)
+def start_client():
+    client = Client(config.URL1)
 
-client.connect()
-print("Client connected")
+    client.connect()
+    print("Client connected")
 
-while True:
-    Temp = client.get_node('ns=2;s="V1_Te"')
-    print(Temp.get_value())
+    while True:
 
-    Time = client.get_node('ns=2;s="V1_Ti"')
-    print(Time.get_value())
+        Temp = client.get_node('ns=2;s="V1_Te"')
+        #print(Temp.get_value())
+        Time = client.get_node('ns=2;s="V1_Ti"')
+        #print(Time.get_value())
+        State = client.get_node('ns=2;s="V1_St"')
+        #print(State.get_value())
+        print("Client: "+ str(Temp.get_value()), str(Time.get_value()), str(State.get_value()))
 
-    State = client.get_node('ns=2;s="V1_St"')
-    print(State.get_value())
-
-    if Temp > 23 and State == 'warming':
-        thermostat.thermostat.temp_max()
-    elif Temp < 16 and State == 'cooling':
-        thermostat.thermostat.temp_min()
-    time.sleep(2)
+        if Temp.get_value() > 23.0 and State.get_value() == 'warming':
+            #thermostat.thermostat.temp_max()
+            config.local_temp_max = 1
+            config.local_temp_min = 0
+        elif Temp.get_value() < 16 and State.get_value() == 'cooling':
+            #thermostat.thermostat.temp_min()
+            config.local_temp_max = 0
+            config.local_temp_min = 1
+            
+        time.sleep(2)
