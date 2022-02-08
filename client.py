@@ -7,7 +7,7 @@ from warnings import catch_warnings;
 import psycopg2
 
 CONNECTION = "postgres://"+configDocker.username+":"+configDocker.password+"@"+configDocker.host+":"+configDocker.port+"/"+configDocker.dbName
-query_create_table = "CREATE TABLE therm (datetime TIMESTAMP, temp FLOAT);"
+query_create_table = "CREATE TABLE therm (datetime TIMESTAMP, temp FLOAT, state VARCHAR (10));"
 query_create_hypertable = "SELECT create_hypertable('therm', 'datetime');"
 drop_table = "DROP TABLE therm;"
 
@@ -35,7 +35,7 @@ def start_client():
             State = client.get_node('ns=2;s="V1_St"')
             print("Client: "+ str(Temp.get_value()), str(Time.get_value()), str(State.get_value()))
             #insert thermostat value to the database
-            insert_value(Temp.get_value())           
+            insert_value(Temp.get_value(), State.get_value())           
 
             if Temp.get_value() > 23.0 and State.get_value() == 'warming':
                 #thermostat.thermostat.temp_max()
@@ -51,9 +51,9 @@ def start_client():
         cursor.close()
 
 
-def insert_value(temp):
+def insert_value(temp, state):
 
     conn = psycopg2.connect(CONNECTION)
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO therm (datetime, temp) VALUES (current_timestamp,"+str(temp)+")")
+    cursor.execute("INSERT INTO therm (datetime, temp, state) VALUES (current_timestamp,"+str(temp)+",'"+str(state)+"')")
     conn.commit()
