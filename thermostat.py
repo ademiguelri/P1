@@ -1,4 +1,3 @@
-from concurrent.futures import thread
 import Control.stateMachine as stateMachine
 import server
 import client
