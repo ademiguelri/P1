@@ -21,10 +21,14 @@ def start_server():
     Temp = Param.add_variable('ns=2;s="V1_Te"', "Temperature", 0)
     Time = Param.add_variable('ns=2;s="V1_Ti"', "Time", 0)
     State = Param.add_variable('ns=2;s="V1_St"', "State", 0)
+    temp_max = Param.add_variable('ns=2;s="V1_Tmax"', "Temperature max", 0)
+    temp_min = Param.add_variable('ns=2;s="V1_Tmin"', "Temperature min", 0)
 
     Temp.set_writable()
     Time.set_writable()
     State.set_writable()
+    temp_max.set_writable()
+    temp_min.set_writable()
 
     server.start()
     print("Server started at {}".format(config.URL))
@@ -33,7 +37,8 @@ def start_server():
         Temperature = config.local_temp
         TIME = datetime.datetime.now()
         STATE = config.local_state
-
+        config.local_temp_max = temp_max.get_value()
+        config.local_temp_min = temp_min.get_value()
         print("Server: " + str(Temperature), str(TIME), str(STATE))
 
         Temp.set_value(Temperature)

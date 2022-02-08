@@ -33,18 +33,21 @@ def start_client():
             Temp = client.get_node('ns=2;s="V1_Te"')
             Time = client.get_node('ns=2;s="V1_Ti"')
             State = client.get_node('ns=2;s="V1_St"')
+            Temp_max = client.get_node('ns=2;s="V1_Tmax"')
+            Temp_min = client.get_node('ns=2;s="V1_Tmin"')
+
             print("Client: "+ str(Temp.get_value()), str(Time.get_value()), str(State.get_value()))
             #insert thermostat value to the database
             insert_value(Temp.get_value(), State.get_value())           
 
             if Temp.get_value() > 23.0 and State.get_value() == 'warming':
                 #thermostat.thermostat.temp_max()
-                config.local_temp_max = 1
-                config.local_temp_min = 0
+                Temp_max.set_value(1)
+                Temp_min.set_value(0)
             elif Temp.get_value() < 16 and State.get_value() == 'cooling':
                 #thermostat.thermostat.temp_min()
-                config.local_temp_max = 0
-                config.local_temp_min = 1
+                Temp_max.set_value(0)
+                Temp_min.set_value(1)
                 
             time.sleep(2)
             
