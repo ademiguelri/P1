@@ -1,17 +1,18 @@
 from opcua import Client
 import time
-import config
+import Control.config as config
 import thermostat
+import Docker.parameters as parameters
 
 def start_client():
     client = Client(config.URL1)
-
     client.connect()
     print("Client connected")
 
     while True:
 
         Temp = client.get_node('ns=2;s="V1_Te"')
+        parameters.TEMP = Temp.get_value()
         #print(Temp.get_value())
         Time = client.get_node('ns=2;s="V1_Ti"')
         #print(Time.get_value())

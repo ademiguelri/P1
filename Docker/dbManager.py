@@ -1,9 +1,9 @@
 from warnings import catch_warnings;
 import psycopg2
-import config
-import Control.thermostat as thermostat
+import time
+import parameters
 
-CONNECTION = "postgres://"+config.username+":"+config.password+"@"+config.host+":"+config.port+"/"+config.dbName
+CONNECTION = "postgres://"+parameters.username+":"+parameters.password+"@"+parameters.host+":"+parameters.port+"/"+parameters.dbName
 query_create_table = "CREATE TABLE therm (datetime TIMESTAMP, temp FLOAT);"
 query_create_hypertable = "SELECT create_hypertable('therm', 'datetime');"
 drop_table = "DROP TABLE therm;"
@@ -24,8 +24,10 @@ finally:
     conn.commit()
 
     while True:
-        cursor.execute("INSERT INTO therm (datetime, temp) VALUES (current_timestamp,"+str(thermostat.temp)+")")
+        print("Sending to database: "+ str(parameters.TEMP))
+        cursor.execute("INSERT INTO therm (datetime, temp) VALUES (current_timestamp,"+str(parameters.TEMP)+")")
         conn.commit()
+        time.sleep(1)
 
     cursor.close()
 

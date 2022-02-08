@@ -1,12 +1,12 @@
 from concurrent.futures import thread
 from tracemalloc import start
-import stateMachine
+import Control.stateMachine as stateMachine
 import server
 import client
 import random
 import time
 from threading import Thread
-import config
+import Control.config as config
 
 
 def main():

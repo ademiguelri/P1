@@ -2,7 +2,7 @@ from opcua import Server
 from random import randint
 import datetime
 import time
-import config
+import Control.config as config
 import thermostat
 
 def start_server():
