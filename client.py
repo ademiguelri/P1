@@ -18,8 +18,6 @@ def start_client():
 
     with psycopg2.connect(CONNECTION) as conn:
         cursor = conn.cursor()
-
-    cursor = conn.cursor()
     try:
         cursor.execute(query_create_table)
         conn.commit()
@@ -33,16 +31,11 @@ def start_client():
         while True:
 
             Temp = client.get_node('ns=2;s="V1_Te"')
-            #print(Temp.get_value())
             Time = client.get_node('ns=2;s="V1_Ti"')
-            #print(Time.get_value())
             State = client.get_node('ns=2;s="V1_St"')
-            #print(State.get_value())
             print("Client: "+ str(Temp.get_value()), str(Time.get_value()), str(State.get_value()))
-
-            cursor.execute("INSERT INTO therm (datetime, temp) VALUES (current_timestamp,"+str(Temp.get_value())+")")
-            conn.commit()
-
+            #insert thermostat value to the database
+            insert_value(Temp.get_value())           
 
             if Temp.get_value() > 23.0 and State.get_value() == 'warming':
                 #thermostat.thermostat.temp_max()
@@ -56,3 +49,11 @@ def start_client():
             time.sleep(2)
             
         cursor.close()
+
+
+def insert_value(temp):
+
+    conn = psycopg2.connect(CONNECTION)
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO therm (datetime, temp) VALUES (current_timestamp,"+str(temp)+")")
+    conn.commit()

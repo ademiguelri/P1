@@ -19,7 +19,7 @@ def main():
 #   Start OPC UA server and client 
     server_thread = Thread(target=server.start_server)
     server_thread.start()
-    time.sleep(10)
+    time.sleep(5)
     client_thread = Thread(target=client.start_client)
     client_thread.start()
 
