@@ -1,5 +1,4 @@
 from concurrent.futures import thread
-from tracemalloc import start
 import Control.stateMachine as stateMachine
 import server
 import client

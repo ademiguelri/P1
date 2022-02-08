@@ -1,9 +1,9 @@
 from warnings import catch_warnings;
 import psycopg2
 import time
-import parameters
+import Docker.config as config
 
-CONNECTION = "postgres://"+parameters.username+":"+parameters.password+"@"+parameters.host+":"+parameters.port+"/"+parameters.dbName
+CONNECTION = "postgres://"+config.username+":"+config.password+"@"+config.host+":"+config.port+"/"+config.dbName
 query_create_table = "CREATE TABLE therm (datetime TIMESTAMP, temp FLOAT);"
 query_create_hypertable = "SELECT create_hypertable('therm', 'datetime');"
 drop_table = "DROP TABLE therm;"
@@ -24,8 +24,8 @@ finally:
     conn.commit()
 
     while True:
-        print("Sending to database: "+ str(parameters.TEMP))
-        cursor.execute("INSERT INTO therm (datetime, temp) VALUES (current_timestamp,"+str(parameters.TEMP)+")")
+        print("Sending to database: "+ str(config.TEMP))
+        cursor.execute("INSERT INTO therm (datetime, temp) VALUES (current_timestamp,"+str(config.TEMP)+")")
         conn.commit()
         time.sleep(1)
 

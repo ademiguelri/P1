@@ -2,7 +2,7 @@ from opcua import Client
 import time
 import Control.config as config
 import thermostat
-import Docker.parameters as parameters
+import Docker.config as configDocker
 
 def start_client():
     client = Client(config.URL1)
@@ -12,7 +12,7 @@ def start_client():
     while True:
 
         Temp = client.get_node('ns=2;s="V1_Te"')
-        parameters.TEMP = Temp.get_value()
+        configDocker.TEMP = Temp.get_value()
         #print(Temp.get_value())
         Time = client.get_node('ns=2;s="V1_Ti"')
         #print(Time.get_value())
