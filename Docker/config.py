@@ -3,4 +3,3 @@ password = "password"
 host = "localhost"
 port = "5432"
 dbName = "test"
-TEMP = 0
