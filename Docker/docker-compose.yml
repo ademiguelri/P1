@@ -14,4 +14,4 @@ services:
       - 3000:3000
     user: '104'
     volumes:
-      - ./Grafana/provisioning:/etc/grafana/provisoning
+      - ./Grafana/provisioning:/etc/grafana/provisioning
