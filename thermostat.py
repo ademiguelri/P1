@@ -26,16 +26,16 @@ def main():
     while thermostat.LOOP:  
 
         if thermostat.state == 'start':
-            print("STATE 1")
+            print("STATE 1 start")
             thermostat.initialize()
         elif thermostat.state == 'warming':
-            print("STATE 2")
+            print("STATE 2 warming")
             if config.local_temp_max == 1:
                 thermostat.temp_max()
             else:
                 thermostat.temp += random.random()
         elif thermostat.state == 'cooling':
-            print("STATE 3")
+            print("STATE 3 cooling")
             if config.local_temp_min == 1:
                 thermostat.temp_min()
             thermostat.temp -= random.random()
