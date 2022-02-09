@@ -1,4 +1,4 @@
-FROM grafana/grafana
+FROM grafana/grafana-enterprise:latest
 
 ENV GF_AUTH_DISABLE_LOGIN_FORM "true"
 ENV GF_AUTH_ANONYMOUS_ENABLED "true"

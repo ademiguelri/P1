@@ -1,0 +1,86 @@
+{
+    "id": 4,
+    "gridPos": {
+      "x": 0,
+      "y": 0,
+      "w": 12,
+      "h": 8
+    },
+    "type": "piechart",
+    "title": "Panel Title",
+    "targets": [
+      {
+        "refId": "A",
+        "datasource": {
+          "type": "postgres",
+          "uid": "xOIo0Ja7z"
+        },
+        "format": "table",
+        "timeColumn": "datetime",
+        "metricColumn": "none",
+        "group": [],
+        "where": [
+          {
+            "type": "macro",
+            "name": "$__timeFilter",
+            "params": []
+          }
+        ],
+        "select": [
+          [
+            {
+              "type": "column",
+              "params": [
+                "temp"
+              ]
+            }
+          ]
+        ],
+        "rawQuery": true,
+        "rawSql": "SELECT state, COUNT(state)\r\nFROM therm\r\ngroup by state\r\n",
+        "table": "therm",
+        "timeColumnType": "timestamp"
+      }
+    ],
+    "options": {
+      "reduceOptions": {
+        "values": true,
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": ""
+      },
+      "pieType": "pie",
+      "tooltip": {
+        "mode": "single",
+        "sort": "none"
+      },
+      "legend": {
+        "displayMode": "list",
+        "placement": "right",
+        "values": []
+      },
+      "displayLabels": [
+        "percent"
+      ]
+    },
+    "fieldConfig": {
+      "defaults": {
+        "custom": {
+          "hideFrom": {
+            "tooltip": false,
+            "viz": false,
+            "legend": false
+          }
+        },
+        "color": {
+          "mode": "palette-classic"
+        },
+        "mappings": [],
+        "unit": "short"
+      },
+      "overrides": []
+    },
+    "pluginVersion": "8.4.0-beta1",
+    "datasource": null
+  }

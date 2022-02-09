@@ -1,0 +1,107 @@
+{
+    "id": 2,
+    "gridPos": {
+      "h": 9,
+      "w": 12,
+      "x": 0,
+      "y": 0
+    },
+    "type": "timeseries",
+    "title": "Panel Title",
+    "fieldConfig": {
+      "defaults": {
+        "custom": {
+          "drawStyle": "line",
+          "lineInterpolation": "smooth",
+          "barAlignment": 0,
+          "lineWidth": 3,
+          "fillOpacity": 20,
+          "gradientMode": "scheme",
+          "spanNulls": false,
+          "showPoints": "auto",
+          "pointSize": 5,
+          "stacking": {
+            "mode": "none",
+            "group": "A"
+          },
+          "axisPlacement": "auto",
+          "axisLabel": "",
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "hideFrom": {
+            "tooltip": false,
+            "viz": false,
+            "legend": false
+          },
+          "thresholdsStyle": {
+            "mode": "off"
+          }
+        },
+        "color": {
+          "mode": "continuous-GrYlRd"
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 80
+            }
+          ]
+        }
+      },
+      "overrides": []
+    },
+    "options": {
+      "tooltip": {
+        "mode": "single",
+        "sort": "none"
+      },
+      "legend": {
+        "displayMode": "list",
+        "placement": "bottom",
+        "calcs": []
+      }
+    },
+    "targets": [
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "xOIo0Ja7z"
+        },
+        "format": "time_series",
+        "group": [],
+        "metricColumn": "none",
+        "rawQuery": true,
+        "rawSql": "SELECT\n  datetime AS \"time\",\n  temp\nFROM therm\nWHERE\n  $__timeFilter(datetime)\nORDER BY 1",
+        "refId": "A",
+        "select": [
+          [
+            {
+              "params": [
+                "temp"
+              ],
+              "type": "column"
+            }
+          ]
+        ],
+        "table": "therm",
+        "timeColumn": "datetime",
+        "timeColumnType": "timestamp",
+        "where": [
+          {
+            "name": "$__timeFilter",
+            "params": [],
+            "type": "macro"
+          }
+        ]
+      }
+    ],
+    "datasource": null
+  }

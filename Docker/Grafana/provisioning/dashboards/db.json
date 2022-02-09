@@ -1,0 +1,80 @@
+{
+    "id": 6,
+    "gridPos": {
+      "x": 12,
+      "y": 0,
+      "w": 12,
+      "h": 8
+    },
+    "type": "table",
+    "title": "Panel Title",
+    "targets": [
+      {
+        "refId": "A",
+        "datasource": {
+          "type": "postgres",
+          "uid": "xOIo0Ja7z"
+        },
+        "format": "table",
+        "timeColumn": "datetime",
+        "metricColumn": "none",
+        "group": [],
+        "where": [
+          {
+            "type": "macro",
+            "name": "$__timeFilter",
+            "params": []
+          }
+        ],
+        "select": [
+          [
+            {
+              "type": "column",
+              "params": [
+                "temp"
+              ]
+            }
+          ]
+        ],
+        "rawQuery": true,
+        "rawSql": "SELECT\r\n  datetime AS \"time\",\r\n  temp,\r\n  state\r\nFROM therm\r\nORDER BY datetime desc",
+        "table": "therm",
+        "timeColumnType": "timestamp"
+      }
+    ],
+    "options": {
+      "showHeader": true,
+      "footer": {
+        "show": false,
+        "reducer": [
+          "sum"
+        ],
+        "fields": ""
+      }
+    },
+    "fieldConfig": {
+      "defaults": {
+        "custom": {
+          "align": "auto",
+          "displayMode": "auto"
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "value": null,
+              "color": "green"
+            },
+            {
+              "value": 80,
+              "color": "red"
+            }
+          ]
+        }
+      },
+      "overrides": []
+    },
+    "pluginVersion": "8.4.0-beta1",
+    "datasource": null
+  }
